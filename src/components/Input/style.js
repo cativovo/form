@@ -48,7 +48,7 @@ export const InputWrapper = styled.div`
         margin-top: 1rem;
     }
 
-    ${({ isWarning }) => isWarning && `
+    ${({ hasWarning }) => hasWarning && `
       &, * {
             border-color: red !important; 
         }

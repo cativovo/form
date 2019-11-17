@@ -5,11 +5,11 @@ import { InputWrapper } from './style';
 
 const Input = ({ isRequired, label }) => {
   const [inputValue, setInputValue] = useState('');
-  const [isWarning, setIsWarning] = useState(false);
+  const [hasWarning, setHasWarning] = useState(false);
   const id = `input${Math.random()}`;
 
   return (
-    <InputWrapper isWarning={isWarning}>
+    <InputWrapper hasWarning={hasWarning}>
       <label htmlFor={id}>
         <span>
           {label}
@@ -19,17 +19,17 @@ const Input = ({ isRequired, label }) => {
         </span>
         <input
           id={id}
-          onBlur={() => isRequired && setIsWarning(!inputValue)}
+          onBlur={() => isRequired && setHasWarning(!inputValue)}
           onChange={(e) => {
             const { value } = e.target;
-            if (isWarning && value) setIsWarning(false);
-            if (!value) setIsWarning(true);
+            if (hasWarning && value) setHasWarning(false);
+            if (!value) setHasWarning(true);
             setInputValue(value);
           }}
           type="text"
           value={inputValue}
         />
-        {isWarning && <p className="warning">This is a required question</p>}
+        {hasWarning && <p className="warning">This is a required question</p>}
       </label>
     </InputWrapper>
   );

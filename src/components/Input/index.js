@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'proptypes';
 import { InputWrapper } from './style';
 
-
 const Input = ({ isRequired, label }) => {
   const [inputValue, setInputValue] = useState('');
   const [hasWarning, setHasWarning] = useState(false);
@@ -13,9 +12,7 @@ const Input = ({ isRequired, label }) => {
       <label htmlFor={id}>
         <span>
           {label}
-          {isRequired && (
-            <span className="red"> *</span>
-          )}
+          {isRequired && <span className="red"> *</span>}
         </span>
         <input
           id={id}
@@ -35,7 +32,6 @@ const Input = ({ isRequired, label }) => {
   );
 };
 
-
 Input.propTypes = {
   isRequired: PropTypes.bool,
   label: PropTypes.string.isRequired,
@@ -44,6 +40,5 @@ Input.propTypes = {
 Input.defaultProps = {
   isRequired: false,
 };
-
 
 export default Input;

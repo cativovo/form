@@ -1,7 +1,6 @@
-import React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import React, { useState } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
 import Input from './Input';
-
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -20,16 +19,57 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App = () => (
-  <div className="App">
+const createQuestion = (label, options = { type: 'text', required: false }) => ({
+  label,
+  ...options,
+});
 
-    <h1>form!</h1>
-    <GlobalStyle />
-    <Input isRequired label="sample question?" />
-    <h1>test</h1>
-    <Input label="this is not requried sample question?" />
-  </div>
-);
+const question1 = createQuestion('sample question', { required: true });
+const question2 = createQuestion('this is not required');
+const question3 = createQuestion('your email', { type: 'email', required: true });
+const question4 = createQuestion('test 2');
+const question5 = createQuestion('ooooo');
+const question6 = createQuestion('yoooo');
+const question7 = createQuestion('mooo');
 
+const questions = [question1, question2, question3, question4, question5, question6, question7];
+
+const FormGroup = styled.div`
+  > * {
+    margin: 20px;
+  }
+`;
+
+const App = () => {
+  const [page, setPage] = useState(1);
+  const questionsPerPage = 2;
+  const offset = (page - 1) * questionsPerPage + 1 - 1;
+
+  const currentQuestions = questions.slice(offset, offset + questionsPerPage);
+  const hasBack = page !== 1 || offset + 1 >= questions.length;
+  const hasNext = page === 1 || offset + 1 < questions.length;
+
+  return (
+    <div className="App">
+      <h1>form!</h1>
+      <GlobalStyle />
+      <FormGroup>
+        {currentQuestions.map((question) => (
+          <Input {...question} key={Math.random() + question.label} />
+        ))}
+      </FormGroup>
+      {hasBack && (
+        <button type="button" onClick={() => setPage(page - 1)}>
+          back
+        </button>
+      )}
+      {hasNext && (
+        <button type="button" onClick={() => setPage(page + 1)}>
+          next
+        </button>
+      )}
+    </div>
+  );
+};
 
 export default App;
